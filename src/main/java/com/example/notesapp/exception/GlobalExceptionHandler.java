@@ -3,6 +3,8 @@ package com.example.notesapp.exception;
 import com.example.notesapp.exception.custom.NoteNotFoundException;
 import com.example.notesapp.exception.custom.UserNotFoundException;
 import com.example.notesapp.exception.custom.UsernameAlreadyExistsException;
+import com.example.notesapp.exception.custom.TagNotFoundException;
+import com.example.notesapp.exception.custom.TagAlreadyExistsException;
 import com.example.notesapp.exception.response.GenericErrorResponse;
 import com.example.notesapp.exception.response.ValidationErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -50,6 +52,28 @@ public class GlobalExceptionHandler {
                 ex.getMessage()
         );
         return new ResponseEntity<>(genericErrorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TagNotFoundException .class)
+    public ResponseEntity<GenericErrorResponse> handleTagNotFoundException (TagNotFoundException ex) {
+        GenericErrorResponse genericErrorResponse = new GenericErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                "Tag Not Found",
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(genericErrorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TagAlreadyExistsException.class)
+    public ResponseEntity<GenericErrorResponse> handleTagAlreadyExistsException(TagAlreadyExistsException ex) {
+        GenericErrorResponse genericErrorResponse = new GenericErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Invalid Input",
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(genericErrorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
