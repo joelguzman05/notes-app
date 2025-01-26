@@ -1,5 +1,6 @@
 package com.example.notesapp.exception;
 
+import com.example.notesapp.exception.custom.NoteNotFoundException;
 import com.example.notesapp.exception.custom.UserNotFoundException;
 import com.example.notesapp.exception.custom.UsernameAlreadyExistsException;
 import com.example.notesapp.exception.response.GenericErrorResponse;
@@ -38,6 +39,17 @@ public class GlobalExceptionHandler {
                 ex.getMessage()
         );
         return new ResponseEntity<>(genericErrorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoteNotFoundException.class)
+    public ResponseEntity<GenericErrorResponse> handleNoteNotFoundException(NoteNotFoundException ex) {
+        GenericErrorResponse genericErrorResponse = new GenericErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                "Note Not Found",
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(genericErrorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
