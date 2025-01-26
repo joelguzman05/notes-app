@@ -6,6 +6,7 @@ import com.example.notesapp.presentation.response.dto.NoteResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +28,10 @@ public class NoteController {
     @PostMapping
     @Operation(
             summary = "Create a new note",
-            description = "Creates a new note for the authenticated user."
+            description = "Creates a new note for the authenticated user with tags."
     )
     public ResponseEntity<NoteResponse> createNote(
-            @RequestBody NoteRequest noteRequest,
+            @Valid @RequestBody NoteRequest noteRequest,
             @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.status(HttpStatus.CREATED).body(noteService.createNote(noteRequest, userDetails));
     }
@@ -38,7 +39,7 @@ public class NoteController {
     @GetMapping
     @Operation(
             summary = "List all user notes",
-            description = "Retrieves all notes for the authenticated user."
+            description = "Retrieves all notes for the authenticated user with tags."
     )
     public ResponseEntity<List<NoteResponse>> getUserNotes(
             @AuthenticationPrincipal UserDetails userDetails) {
@@ -63,7 +64,7 @@ public class NoteController {
     )
     public ResponseEntity<NoteResponse> updateNote(
             @PathVariable Long id,
-            @RequestBody NoteRequest noteRequest,
+            @Valid @RequestBody NoteRequest noteRequest,
             @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.status(HttpStatus.OK).body(noteService.updateNote(id, noteRequest, userDetails));
     }
