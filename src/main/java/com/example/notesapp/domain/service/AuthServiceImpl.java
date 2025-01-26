@@ -2,10 +2,12 @@ package com.example.notesapp.domain.service;
 
 import com.example.notesapp.data.repository.UserRepository;
 import com.example.notesapp.domain.entity.User;
+import com.example.notesapp.domain.mapper.UserMapper;
 import com.example.notesapp.exception.custom.UsernameAlreadyExistsException;
 import com.example.notesapp.presentation.request.dto.LoginRequest;
 import com.example.notesapp.presentation.request.dto.RegisterRequest;
 import com.example.notesapp.presentation.response.dto.AuthResponse;
+import com.example.notesapp.presentation.response.dto.UserProfileResponse;
 import com.example.notesapp.security.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,10 +23,10 @@ public class AuthServiceImpl implements AuthService{
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
-
+    private final UserMapper userMapper;
 
     @Override
-    public void register(RegisterRequest registerRequest) {
+    public UserProfileResponse register(RegisterRequest registerRequest) {
         if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()) {
             throw new UsernameAlreadyExistsException(registerRequest.getUsername());
         }
@@ -33,7 +35,9 @@ public class AuthServiceImpl implements AuthService{
                 .username(registerRequest.getUsername())
                 .password(encodedPassword)
                 .build();
-        userRepository.save(user);
+
+        User savedUser = userRepository.save(user);
+        return userMapper.toUserProfileResponse(savedUser);
     }
 
     @Override
