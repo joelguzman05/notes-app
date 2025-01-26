@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Builder;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "notes")
@@ -31,4 +33,11 @@ public class Note {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToMany
+    @JoinTable(
+            name = "note_tags",
+            joinColumns = @JoinColumn(name = "note_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags;
 }

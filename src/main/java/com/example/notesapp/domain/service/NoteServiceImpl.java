@@ -1,7 +1,9 @@
 package com.example.notesapp.domain.service;
 
 import com.example.notesapp.data.repository.NoteRepository;
+import com.example.notesapp.data.repository.TagRepository;
 import com.example.notesapp.domain.entity.Note;
+import com.example.notesapp.domain.entity.Tag;
 import com.example.notesapp.domain.entity.User;
 import com.example.notesapp.domain.mapper.NoteMapper;
 import com.example.notesapp.exception.custom.NoteNotFoundException;
@@ -22,11 +24,14 @@ public class NoteServiceImpl implements NoteService {
     private final NoteRepository noteRepository;
     private final NoteMapper noteMapper;
     private final UserContext userContext;
+    private final TagRepository tagRepository;
 
     @Override
     public NoteResponse createNote(NoteRequest noteRequest, UserDetails userDetails) {
         User user = userContext.getCurrentUser(userDetails);
-        Note note = noteMapper.toEntity(noteRequest, user);
+        List<Tag> tags = tagRepository.findAllByIdInAndUser(noteRequest.getTagIds(), user);
+
+        Note note = noteMapper.toEntity(noteRequest, user, tags);
         Note savedNote = noteRepository.save(note);
         return noteMapper.toNoteResponse(savedNote);
     }

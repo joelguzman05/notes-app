@@ -1,6 +1,7 @@
 package com.example.notesapp.data.repository;
 
 import com.example.notesapp.domain.entity.Note;
+import com.example.notesapp.domain.entity.Tag;
 import com.example.notesapp.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,4 +13,6 @@ public interface NoteRepository extends JpaRepository<Note, Long> {
     List<Note> findByUser(User user);
 
     Optional<Note> findByIdAndUser(Long id, User user);
+
+    List<Note> findByTagsContainingAndUser(Tag tag, User user);
 }
