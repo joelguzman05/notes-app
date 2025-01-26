@@ -18,9 +18,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserProfileResponse getAuthenticatedUser(UserDetails userDetails) {
-        String username = userDetails.getUsername();
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException(username));
+        User user = findByUsername(userDetails.getUsername());
         return userMapper.toUserProfileResponse(user);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(username));
     }
 }
