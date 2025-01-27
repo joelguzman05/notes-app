@@ -113,7 +113,10 @@ public class NoteController {
     }
 
     @PostMapping("/search")
-    @Operation(summary = "Advanced Search", description = "Search notes by title, content, tags or archived status")
+    @Operation(
+            summary = "Advanced Search",
+            description = "Search notes for the authenticated user by title, content, tags or archived status."
+    )
     public ResponseEntity<List<NoteResponse>> searchNotes(
             @Valid @RequestBody SearchRequest searchRequest,
             @AuthenticationPrincipal UserDetails userDetails) {
