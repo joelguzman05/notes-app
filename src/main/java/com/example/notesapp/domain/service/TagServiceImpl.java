@@ -45,7 +45,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<TagResponse> getUserTags(UserDetails userDetails) {
+    public List<TagResponse> getTags(UserDetails userDetails) {
         User user = userContext.getCurrentUser(userDetails);
         return tagRepository.findByUser(user).stream()
                 .map(tagMapper::toTagResponse)

@@ -49,9 +49,9 @@ public class TagController {
             summary = "List all user tags",
             description = "Retrieves all tags for the authenticated user."
     )
-    public ResponseEntity<List<TagResponse>> getUserTags(
+    public ResponseEntity<List<TagResponse>> getTags(
             @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.status(HttpStatus.OK).body(tagService.getUserTags(userDetails));
+        return ResponseEntity.status(HttpStatus.OK).body(tagService.getTags(userDetails));
     }
 
     @GetMapping("/{id}")

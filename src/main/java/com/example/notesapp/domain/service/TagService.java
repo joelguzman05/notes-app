@@ -10,7 +10,7 @@ public interface TagService {
 
     TagResponse createTag(TagRequest tagRequest, UserDetails userDetails);
 
-    List<TagResponse> getUserTags(UserDetails userDetails);
+    List<TagResponse> getTags(UserDetails userDetails);
 
     TagResponse getTagById(Long id, UserDetails userDetails);
 
