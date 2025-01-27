@@ -2,6 +2,7 @@ package com.example.notesapp.presentation.controller;
 
 import com.example.notesapp.domain.service.NoteService;
 import com.example.notesapp.presentation.request.dto.NoteRequest;
+import com.example.notesapp.presentation.request.dto.SearchRequest;
 import com.example.notesapp.presentation.response.dto.NoteResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -101,5 +102,13 @@ public class NoteController {
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(noteService.unarchiveNote(id, userDetails));
+    }
+
+    @PostMapping("/search")
+    @Operation(summary = "Advanced Search", description = "Search notes by title, content, tags or archived status")
+    public ResponseEntity<List<NoteResponse>> searchNotes(
+            @Valid @RequestBody SearchRequest searchRequest,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(noteService.advancedSearch(searchRequest, userDetails));
     }
 }
