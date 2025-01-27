@@ -30,6 +30,7 @@ public class Note {
     private String content;
 
     @Column(nullable = false)
+    @Builder.Default
     private boolean archived = false;
 
     @ManyToOne
