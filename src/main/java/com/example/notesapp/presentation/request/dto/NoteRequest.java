@@ -19,6 +19,7 @@ public class NoteRequest {
     @Size(max = 2000, message = "Content must not exceed 2000 characters")
     private String content;
 
+    @Size(max = 10, message = "You can associate up to 10 tags only")
     private List<Long> tagIds;
 
 }

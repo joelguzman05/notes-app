@@ -13,6 +13,7 @@ public class SearchRequest {
     @Size(max = 255, message = "Tag name must not exceed 255 characters")
     private String searchQuery;
 
+    @Size(max = 10, message = "You can associate up to 10 tags only")
     private List<Long> tagIds;
 
     private Boolean archived;
