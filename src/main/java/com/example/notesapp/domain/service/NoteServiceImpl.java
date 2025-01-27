@@ -8,6 +8,7 @@ import com.example.notesapp.domain.entity.User;
 import com.example.notesapp.domain.mapper.NoteMapper;
 import com.example.notesapp.exception.custom.NoteNotFoundException;
 import com.example.notesapp.presentation.request.dto.NoteRequest;
+import com.example.notesapp.presentation.request.dto.SearchRequest;
 import com.example.notesapp.presentation.response.dto.NoteResponse;
 import com.example.notesapp.security.UserContext;
 import lombok.AllArgsConstructor;
@@ -107,6 +108,22 @@ public class NoteServiceImpl implements NoteService {
         Note updatedNote = noteRepository.save(note);
 
         return noteMapper.toNoteResponse(updatedNote);
+    }
+
+    @Override
+    public List<NoteResponse> advancedSearch(SearchRequest searchRequest, UserDetails userDetails) {
+        User user = userContext.getCurrentUser(userDetails);
+
+        List<Note> notes = noteRepository.advancedSearch(
+                user,
+                searchRequest.getSearchQuery(),
+                searchRequest.getTagIds(),
+                searchRequest.getArchived()
+        );
+
+        return notes.stream()
+                .map(noteMapper::toNoteResponse)
+                .collect(Collectors.toList());
     }
 
     private Note findByIdAndUser(Long id, User user) {
