@@ -29,7 +29,7 @@ Ensure you have the following installed:
    ```
    git clone https://github.com/joelguzman05/notes-app.git
     ```
-2. Configure the Application: Edit the `application.properties` file located in `src/main/resources/` with your database and security settings.:
+2. Configure the Application: Edit the `application.properties` file located in `src/main/resources/` with your database and security settings.
 3. Build and Run the Application:
    ```
    ./gradlew bootRun
