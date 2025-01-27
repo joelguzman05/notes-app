@@ -21,7 +21,7 @@ A RESTful API application built with **Java 23**, **Spring Boot 3**, and **Postg
 Ensure you have the following installed:
 
 - Java 23
-- PostgreSQL 17
+- PostgreSQL 14+
 
 ### Steps to Run the Project
 
@@ -35,6 +35,6 @@ Ensure you have the following installed:
    ./gradlew bootRun
    ```
 4. Access the Application:
-   - Swagger UI: http://localhost:8080/api/swagger-ui.html
-   - API Docs: http://localhost:8080/api/v3/api-docs
+  - Swagger UI: http://localhost:8080/api/swagger-ui.html
+  - API Docs: http://localhost:8080/api/v3/api-docs
      
