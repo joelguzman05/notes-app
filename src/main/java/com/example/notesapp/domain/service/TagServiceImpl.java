@@ -34,7 +34,12 @@ public class TagServiceImpl implements TagService {
         if (tagRepository.existsByNameAndUser(tagRequest.getName(), user)) {
             throw new TagAlreadyExistsException(tagRequest.getName());
         }
-        Tag tag = tagMapper.toEntity(tagRequest, user);
+
+        Tag tag = Tag.builder()
+                .name(tagRequest.getName())
+                .user(user)
+                .build();
+
         Tag savedTag = tagRepository.save(tag);
         return tagMapper.toTagResponse(savedTag);
     }
@@ -62,6 +67,7 @@ public class TagServiceImpl implements TagService {
                 .orElseThrow(() -> new TagNotFoundException(id));
 
         existingTag.setName(tagRequest.getName());
+
         Tag updatedTag = tagRepository.save(existingTag);
         return tagMapper.toTagResponse(updatedTag);
     }

@@ -31,7 +31,13 @@ public class NoteServiceImpl implements NoteService {
         User user = userContext.getCurrentUser(userDetails);
         List<Tag> tags = tagRepository.findAllByIdInAndUser(noteRequest.getTagIds(), user);
 
-        Note note = noteMapper.toEntity(noteRequest, user, tags);
+        Note note = Note.builder()
+                .title(noteRequest.getTitle())
+                .content(noteRequest.getContent())
+                .user(user)
+                .tags(tags)
+                .build();
+
         Note savedNote = noteRepository.save(note);
         return noteMapper.toNoteResponse(savedNote);
     }
