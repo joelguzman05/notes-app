@@ -35,6 +35,6 @@ Ensure you have the following installed:
    ./gradlew bootRun
    ```
 4. Access the Application:
-   - Swagger UI: http://localhost:8080/api/swagger-ui.html
-   - API Docs: http://localhost:8080/api/v3/api-docs
+   - <a href="http://localhost:8080/api/swagger-ui.html" target="_blank">Swagger UI</a>
+   - <a href="http://localhost:8080/api/v3/api-docs" target="_blank">API Docs</a>
      
