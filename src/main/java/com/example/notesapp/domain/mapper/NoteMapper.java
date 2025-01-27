@@ -26,6 +26,7 @@ public class NoteMapper {
                 note.getId(),
                 note.getTitle(),
                 note.getContent(),
+                note.isArchived(),
                 tags
         );
     }

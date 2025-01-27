@@ -47,19 +47,19 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public NoteResponse getNoteById(Long id, UserDetails userDetails) {
         User user = userContext.getCurrentUser(userDetails);
-        Note note = noteRepository.findByIdAndUser(id, user)
-                .orElseThrow(() -> new NoteNotFoundException(id));
+        Note note = findByIdAndUser(id, user);
         return noteMapper.toNoteResponse(note);
     }
 
     @Override
     public NoteResponse updateNote(Long id, NoteRequest noteRequest, UserDetails userDetails) {
         User user = userContext.getCurrentUser(userDetails);
-        Note existingNote = noteRepository.findByIdAndUser(id, user)
-                .orElseThrow(() -> new NoteNotFoundException(id));
+        List<Tag> tags = tagRepository.findAllByIdInAndUser(noteRequest.getTagIds(), user);
+        Note existingNote = findByIdAndUser(id, user);
 
         existingNote.setTitle(noteRequest.getTitle());
         existingNote.setContent(noteRequest.getContent());
+        existingNote.setTags(tags);
 
         Note updatedNote = noteRepository.save(existingNote);
         return noteMapper.toNoteResponse(updatedNote);
@@ -68,9 +68,43 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public void deleteNote(Long id, UserDetails userDetails) {
         User user = userContext.getCurrentUser(userDetails);
-        Note note = noteRepository.findByIdAndUser(id, user)
-                .orElseThrow(() -> new NoteNotFoundException(id));
+        Note note = findByIdAndUser(id, user);
 
         noteRepository.delete(note);
+    }
+
+    @Override
+    public NoteResponse archiveNote(Long id, UserDetails userDetails) {
+        User user = userContext.getCurrentUser(userDetails);
+        Note note = findByIdAndUser(id, user);
+
+        if (note.isArchived()) {
+            throw new IllegalStateException("Note is already archived");
+        }
+
+        note.setArchived(true);
+        Note updatedNote = noteRepository.save(note);
+
+        return noteMapper.toNoteResponse(updatedNote);
+    }
+
+    @Override
+    public NoteResponse unarchiveNote(Long id, UserDetails userDetails) {
+        User user = userContext.getCurrentUser(userDetails);
+        Note note = findByIdAndUser(id, user);
+
+        if (!note.isArchived()) {
+            throw new IllegalStateException("Note is not archived");
+        }
+
+        note.setArchived(false);
+        Note updatedNote = noteRepository.save(note);
+
+        return noteMapper.toNoteResponse(updatedNote);
+    }
+
+    private Note findByIdAndUser(Long id, User user) {
+        return noteRepository.findByIdAndUser(id, user)
+                .orElseThrow(() -> new NoteNotFoundException(id));
     }
 }

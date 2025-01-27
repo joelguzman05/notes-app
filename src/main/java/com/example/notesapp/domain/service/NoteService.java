@@ -17,4 +17,8 @@ public interface NoteService {
     NoteResponse updateNote(Long id, NoteRequest noteRequest, UserDetails userDetails);
 
     void deleteNote(Long id, UserDetails userDetails);
+
+    NoteResponse archiveNote(Long id, UserDetails userDetails);
+
+    NoteResponse unarchiveNote(Long id, UserDetails userDetails);
 }

@@ -29,6 +29,9 @@ public class Note {
     @Column(nullable = false, length = 2000)
     private String content;
 
+    @Column(nullable = false)
+    private boolean archived = false;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
