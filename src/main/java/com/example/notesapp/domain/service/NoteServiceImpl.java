@@ -26,6 +26,7 @@ public class NoteServiceImpl implements NoteService {
     private final NoteMapper noteMapper;
     private final UserContext userContext;
     private final TagRepository tagRepository;
+    private final SearchStateService searchStateService;
 
     @Override
     public NoteResponse createNote(NoteRequest noteRequest, UserDetails userDetails) {
@@ -120,6 +121,8 @@ public class NoteServiceImpl implements NoteService {
                 searchRequest.getTagIds(),
                 searchRequest.getArchived()
         );
+
+        searchStateService.createSearchState(searchRequest, userDetails);
 
         return notes.stream()
                 .map(noteMapper::toNoteResponse)
