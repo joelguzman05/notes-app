@@ -50,9 +50,9 @@ public class NoteController {
             summary = "List all user notes",
             description = "Retrieves all notes for the authenticated user with tags."
     )
-    public ResponseEntity<List<NoteResponse>> getUserNotes(
+    public ResponseEntity<List<NoteResponse>> getNotes(
             @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.status(HttpStatus.OK).body(noteService.getUserNotes(userDetails));
+        return ResponseEntity.status(HttpStatus.OK).body(noteService.getNotes(userDetails));
     }
 
     @GetMapping("/{id}")

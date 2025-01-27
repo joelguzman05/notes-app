@@ -45,7 +45,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<NoteResponse> getUserNotes(UserDetails userDetails) {
+    public List<NoteResponse> getNotes(UserDetails userDetails) {
         User user = userContext.getCurrentUser(userDetails);
         return noteRepository.findByUser(user).stream()
                 .map(noteMapper::toNoteResponse)

@@ -11,7 +11,7 @@ public interface NoteService {
 
     NoteResponse createNote(NoteRequest noteRequest, UserDetails userDetails);
 
-    List<NoteResponse> getUserNotes(UserDetails userDetails);
+    List<NoteResponse> getNotes(UserDetails userDetails);
 
     NoteResponse getNoteById(Long id, UserDetails userDetails);
 
