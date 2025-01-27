@@ -21,7 +21,7 @@ A RESTful API application built with **Java 23**, **Spring Boot 3**, and **Postg
 Ensure you have the following installed:
 
 - Java 23
-- PostgreSQL 17
+- PostgreSQL 14+
 
 ### Steps to Run the Project
 
