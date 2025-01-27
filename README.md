@@ -7,7 +7,7 @@ A RESTful API application built with **Java 23**, **Spring Boot 3**, and **Postg
 ## 🏗️ Technologies Used
 
 - **Backend:** Java 23, Spring Boot 3 (Spring Security, Spring Data JPA)
-- **Database:** PostgreSQL
+- **Database:** PostgreSQL 17
 - **Security:** Spring Security + JWT
 - **Build Tool:** Gradle
 - **API Documentation:** Swagger (Springdoc OpenAPI)
@@ -21,8 +21,7 @@ A RESTful API application built with **Java 23**, **Spring Boot 3**, and **Postg
 Ensure you have the following installed:
 
 - Java 23
-- PostgreSQL
-- Gradle
+- PostgreSQL 17
 
 ### Steps to Run the Project
 
