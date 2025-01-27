@@ -1,10 +1,10 @@
 package com.example.notesapp.exception;
 
 import com.example.notesapp.exception.custom.NoteNotFoundException;
+import com.example.notesapp.exception.custom.TagAlreadyExistsException;
+import com.example.notesapp.exception.custom.TagNotFoundException;
 import com.example.notesapp.exception.custom.UserNotFoundException;
 import com.example.notesapp.exception.custom.UsernameAlreadyExistsException;
-import com.example.notesapp.exception.custom.TagNotFoundException;
-import com.example.notesapp.exception.custom.TagAlreadyExistsException;
 import com.example.notesapp.exception.response.GenericErrorResponse;
 import com.example.notesapp.exception.response.ValidationErrorResponse;
 import org.springframework.http.HttpStatus;
