@@ -90,7 +90,7 @@ public class NoteController {
     public ResponseEntity<NoteResponse> archiveNote(
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(noteService.archiveNote(id, userDetails));
+        return ResponseEntity.status(HttpStatus.OK).body(noteService.archiveNote(id, userDetails));
     }
 
     @PatchMapping("/{id}/unarchive")
@@ -101,7 +101,7 @@ public class NoteController {
     public ResponseEntity<NoteResponse> unarchiveNote(
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(noteService.unarchiveNote(id, userDetails));
+        return ResponseEntity.status(HttpStatus.OK).body(noteService.unarchiveNote(id, userDetails));
     }
 
     @PostMapping("/search")
@@ -109,6 +109,6 @@ public class NoteController {
     public ResponseEntity<List<NoteResponse>> searchNotes(
             @Valid @RequestBody SearchRequest searchRequest,
             @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(noteService.advancedSearch(searchRequest, userDetails));
+        return ResponseEntity.status(HttpStatus.OK).body(noteService.advancedSearch(searchRequest, userDetails));
     }
 }
