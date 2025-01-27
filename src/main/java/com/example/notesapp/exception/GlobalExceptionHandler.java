@@ -76,6 +76,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(genericErrorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<GenericErrorResponse> handleIllegalStateException(IllegalStateException ex) {
+        GenericErrorResponse response = new GenericErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Invalid Request",
+                ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GenericErrorResponse> handleGenericException(Exception ex) {
         GenericErrorResponse genericErrorResponse = new GenericErrorResponse(
