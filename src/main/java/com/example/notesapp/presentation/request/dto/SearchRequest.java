@@ -10,10 +10,10 @@ import java.util.List;
 @Setter
 public class SearchRequest {
 
-    @Size(max = 255, message = "Tag name must not exceed 255 characters")
+    @Size(max = 255, message = "Search query must not exceed 255 characters")
     private String searchQuery;
 
-    @Size(max = 10, message = "You can associate up to 10 tags only")
+    @Size(max = 10, message = "A maximum of 10 tags can be selected for searching")
     private List<Long> tagIds;
 
     private Boolean archived;
