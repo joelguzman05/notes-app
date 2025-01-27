@@ -80,4 +80,26 @@ public class NoteController {
         noteService.deleteNote(id, userDetails);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @PatchMapping("/{id}/archive")
+    @Operation(
+            summary = "Archive a note",
+            description = "Archives a specific note by ID for the authenticated user."
+    )
+    public ResponseEntity<NoteResponse> archiveNote(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(noteService.archiveNote(id, userDetails));
+    }
+
+    @PatchMapping("/{id}/unarchive")
+    @Operation(
+            summary = "Unarchive a note",
+            description = "Unarchives a specific note by ID for the authenticated user."
+    )
+    public ResponseEntity<NoteResponse> unarchiveNote(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(noteService.unarchiveNote(id, userDetails));
+    }
 }
