@@ -55,16 +55,14 @@ public class TagServiceImpl implements TagService {
     @Override
     public TagResponse getTagById(Long id, UserDetails userDetails) {
         User user = userContext.getCurrentUser(userDetails);
-        Tag tag = tagRepository.findByIdAndUser(id, user)
-                .orElseThrow(() -> new TagNotFoundException(id));
+        Tag tag = findByIdAndUser(id, user);
         return tagMapper.toTagResponse(tag);
     }
 
     @Override
     public TagResponse updateTag(Long id, TagRequest tagRequest, UserDetails userDetails) {
         User user = userContext.getCurrentUser(userDetails);
-        Tag existingTag = tagRepository.findByIdAndUser(id, user)
-                .orElseThrow(() -> new TagNotFoundException(id));
+        Tag existingTag = findByIdAndUser(id, user);
 
         existingTag.setName(tagRequest.getName());
 
@@ -76,13 +74,11 @@ public class TagServiceImpl implements TagService {
     @Transactional
     public void deleteTag(Long id, Long replacementTagId, UserDetails userDetails) {
         User user = userContext.getCurrentUser(userDetails);
-        Tag tagToDelete = tagRepository.findByIdAndUser(id, user)
-                .orElseThrow(() -> new TagNotFoundException(id));
+        Tag tagToDelete = findByIdAndUser(id, user);
 
         List<Note> notesToUpdate = noteRepository.findByTagsContainingAndUser(tagToDelete, user);
         if (replacementTagId != null) {
-            Tag newTag = tagRepository.findByIdAndUser(replacementTagId, user)
-                    .orElseThrow(() -> new TagNotFoundException(replacementTagId));
+            Tag newTag = findByIdAndUser(replacementTagId, user);
             notesToUpdate.forEach(note -> note.getTags().add(newTag));
         }
 
@@ -90,5 +86,10 @@ public class TagServiceImpl implements TagService {
         noteRepository.saveAll(notesToUpdate);
 
         tagRepository.delete(tagToDelete);
+    }
+
+    private Tag findByIdAndUser(Long id, User user) {
+        return tagRepository.findByIdAndUser(id, user)
+                .orElseThrow(() -> new TagNotFoundException(id));
     }
 }
